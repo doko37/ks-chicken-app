@@ -1,4 +1,14 @@
 {
   "name": "ks_restaurant_app",
-  "displayName": "ks_restaurant_app"
+  "icon": "./icon.png",
+  "version": "1.0.0",
+  "slug": "ks-chicken-app",
+  "ios": {
+    "bundleIdentifier": "com.ks-chicken.restaurant-app",
+    "buildNumber": "1.0.0"
+  },
+  "android": {
+    "package": "com.ks-chicken.restaurant-app",
+    "buildNumber": "1"
+  }
 }
