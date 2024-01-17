@@ -4,7 +4,7 @@ import OrderInfo from './OrderInfo'
 import moment from 'moment-timezone'
 import { Icon } from '@rneui/base'
 import axios from 'axios'
-import EscPosPrinter from 'react-native-esc-pos-printer'
+import EscPosPrinter, { getPrinterSeriesByName } from 'react-native-esc-pos-printer'
 import request from '../../api/request'
 import { getCurrentOrders } from '../../features/order/orderSlice'
 
@@ -29,12 +29,13 @@ const Order = ({
 
     const print = async () => {
         try {
+            const printers = await EscPosPrinter.discover()
+            const printer = printers[0]
             await EscPosPrinter.init({
-                target: "BT:00:01:90:56:FC:66",
-                seriesName: 'EPOS2_TM_M30II',
+                target: printer.target,
+                seriesName: getPrinterSeriesByName(printer.name),
                 language: 'EPOS2_LANG_EN'
-            }).then(() => console.log('printer connected'))
-            .catch((e) => console.log('printer error: ' + e))
+            })
 
             const printing = new EscPosPrinter.printing()
 
@@ -165,25 +166,7 @@ const Order = ({
     }
 
     const helpme = async () => {
-        try {
-            await EscPosPrinter.init({
-                target: "BT:00:01:90:56:FC:66",
-                seriesName: 'EPOS2_TM_M30II',
-                language: 'EPOS2_LANG_EN'
-            }).then(() => console.log('printer connected'))
-            .catch((e) => console.log('printer error: ' + e))
-
-            const printing = new EscPosPrinter.printing()
-
-            printing
-                .initialize()
-                .line("HELP ME")
-                .newline(2)
-                .line("HELP ME")
-                .cut()
-                .send()
-
-        } catch(e) { console.log("Print error: " + e.stack) }
+        await print()
     }
 
     return (
@@ -224,9 +207,6 @@ const Order = ({
                         fetchData={fetchData}
                         completedAt={completedAt}
                     />
-                    <Pressable onPress={helpme}>
-                        <Text>Print</Text>
-                    </Pressable>
                 </Animated.View>
             </View>
         </View>
