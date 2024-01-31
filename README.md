@@ -1,4 +1,4 @@
-#Restaurant Side application for the KS Chicken website.
+# Restaurant Side application for the KS Chicken website.
 
 - Displays active orders recieved from the website
 - Connects to an EPSON epos printer to allow staff to print out order receipts to easily send orders to the kitchen
