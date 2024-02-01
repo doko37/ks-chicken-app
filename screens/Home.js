@@ -29,8 +29,8 @@ const Home = ({ navigation }) => {
 
     const getToken = async () => {
       const login = await request.post('/auth/login/', {
-          email: "hunubmm@gmail.com",
-          password: "admin"
+          email: "test@gmail.com",
+          password: "test"
       })
 
       console.log("setting token")
